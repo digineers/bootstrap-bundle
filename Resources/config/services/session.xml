@@ -9,7 +9,7 @@
 
     <services>
 
-        <service id="braincrafted_bootstrap.flash" class="%braincrafted_bootstrap.flash.class%">
+        <service id="braincrafted_bootstrap.flash" class="%braincrafted_bootstrap.flash.class%" public="true">
             <argument type="service" id="session" />
         </service>
 
