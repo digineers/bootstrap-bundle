@@ -7,6 +7,7 @@
 namespace Braincrafted\Bundle\BootstrapBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
@@ -35,9 +36,8 @@ class TypeSetterExtension extends AbstractTypeExtension
     /**
      * {@inheritDoc}
      */
-    public function getExtendedType()
+    public static function getExtendedTypes()
     {
-        // map old class to new one using LegacyFormHelper
-        return LegacyFormHelper::getType('form');
+        return [FormType::class];
     }
 }
