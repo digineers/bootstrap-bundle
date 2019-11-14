@@ -36,6 +36,14 @@ class TypeSetterExtension extends AbstractTypeExtension
     /**
      * {@inheritDoc}
      */
+    public function getExtendedType()
+    {
+        return self::getExtendedTypes()[0];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public static function getExtendedTypes()
     {
         return [FormType::class];

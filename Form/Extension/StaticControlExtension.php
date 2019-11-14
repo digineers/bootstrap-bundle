@@ -53,6 +53,14 @@ class StaticControlExtension extends AbstractTypeExtension
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getExtendedType()
+    {
+        return self::getExtendedTypes()[0];
+    }
+
+    /**
      * {@inheritdoc}
      * Although we only support a field that provides a somewhat text-value we extend the form field.
      * (to be more precise: all fields which will be rendered as form_widget_simple)

@@ -61,8 +61,14 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('braincrafted_bootstrap');
 
-        $treeBuilder
-            ->getRootNode()
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $node = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $node = $treeBuilder->root('braincrafted_bootstrap');
+        }
+
+        $node
             ->children()
                 ->scalarNode('output_dir')->defaultValue('')->end()
                 ->scalarNode('assets_dir')
