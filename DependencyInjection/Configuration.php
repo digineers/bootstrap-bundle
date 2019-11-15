@@ -38,10 +38,10 @@ class Configuration implements ConfigurationInterface
     const DEFAULT_BOOTSTRAP_OUTPUT_SASS = '%kernel.root_dir%/Resources/sass/bootstrap.scss';
 
     /** @var string */
-    const DEFAULT_BOOTSTRAP_TEMPLATE = 'BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig';
+    const DEFAULT_BOOTSTRAP_TEMPLATE = '@BraincraftedBootstrap/Bootstrap/bootstrap.less.twig';
 
     /** @var string */
-    const DEFAULT_BOOTSTRAP_TEMPLATE_SASS = 'BraincraftedBootstrapBundle:Bootstrap:bootstrap.scss.twig';
+    const DEFAULT_BOOTSTRAP_TEMPLATE_SASS = '@BraincraftedBootstrap/Bootstrap/bootstrap.scss.twig';
 
     /** @var string */
     const DEFAULT_JQUERY_PATH = '%kernel.root_dir%/../vendor/jquery/jquery/jquery-1.11.1.js';
@@ -59,10 +59,16 @@ class Configuration implements ConfigurationInterface
 
     private function buildConfigTree()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('braincrafted_bootstrap');
+        $treeBuilder = new TreeBuilder('braincrafted_bootstrap');
 
-        $rootNode
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $node = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $node = $treeBuilder->root('braincrafted_bootstrap');
+        }
+
+        $node
             ->children()
                 ->scalarNode('output_dir')->defaultValue('')->end()
                 ->scalarNode('assets_dir')

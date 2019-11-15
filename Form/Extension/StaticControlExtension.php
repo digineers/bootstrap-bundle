@@ -3,6 +3,7 @@
 namespace Braincrafted\Bundle\BootstrapBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -52,15 +53,23 @@ class StaticControlExtension extends AbstractTypeExtension
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getExtendedType()
+    {
+        return self::getExtendedTypes()[0];
+    }
+
+    /**
      * {@inheritdoc}
      * Although we only support a field that provides a somewhat text-value we extend the form field.
      * (to be more precise: all fields which will be rendered as form_widget_simple)
      * If not we would have to create for every of the text-based types an own extension class.
      * This way we also support new text-based types out of the box.
      */
-    public function getExtendedType()
+    public static function getExtendedTypes()
     {
         // map old class to new one using LegacyFormHelper
-        return LegacyFormHelper::getType('form');
+        return [FormType::class];
     }
 }

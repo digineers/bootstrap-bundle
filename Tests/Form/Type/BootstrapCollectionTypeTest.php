@@ -12,7 +12,7 @@ use Braincrafted\Bundle\BootstrapBundle\Util\LegacyFormHelper;
  *
  * @group unit
  */
-class BootstrapCollectionTypeTest extends \PHPUnit_Framework_TestCase
+class BootstrapCollectionTypeTest extends \PHPUnit\Framework\TestCase
 {
     /** @var BootstrapCollectionType */
     private $type;
@@ -43,7 +43,9 @@ class BootstrapCollectionTypeTest extends \PHPUnit_Framework_TestCase
             'allow_add'             => true,
             'allow_delete'          => false,
             'add_button_text'       => 'Add',
+            'add_button_class'      => 'btn btn-primary btn-sm',
             'delete_button_text'    => 'Delete',
+            'delete_button_class'   => 'btn btn-danger btn-sm',
             'sub_widget_col'        => 2,
             'button_col'            => 2,
             'prototype_name'        => '___name___'

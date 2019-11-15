@@ -3,6 +3,7 @@
 namespace Braincrafted\Bundle\BootstrapBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
@@ -43,9 +44,16 @@ class ButtonTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    public static function getExtendedTypes()
+    {
+        return [ButtonType::class];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getExtendedType()
     {
-        // map old class to new one using LegacyFormHelper
-        return LegacyFormHelper::getType('button');
+        return self::getExtendedTypes()[0];
     }
 }

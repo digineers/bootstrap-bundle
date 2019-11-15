@@ -9,9 +9,9 @@
 namespace Braincrafted\Bundle\BootstrapBundle\Tests\Command;
 
 use \Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-
 use Braincrafted\Bundle\BootstrapBundle\Command\GenerateCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -29,7 +29,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @link       http://bootstrap.braincrafted.com BraincraftedBootstrapBundle
  * @group      unit
  */
-class GenerateCommandTest extends \PHPUnit_Framework_TestCase
+class GenerateCommandTest extends TestCase
 {
     /**
      * @var m\Mock|\Twig_Environment
@@ -52,12 +52,15 @@ class GenerateCommandTest extends \PHPUnit_Framework_TestCase
 
         $this->container = m::mock('Symfony\Component\DependencyInjection\ContainerInterface');
         $this->container->shouldReceive('get')->with('twig')->andReturn($this->twig);
+        $this->container->shouldReceive('hasParameter')->andReturn(false);
 
         $this->kernel = m::mock('Symfony\Component\HttpKernel\KernelInterface');
         $this->kernel->shouldReceive('getName')->andReturn('app');
         $this->kernel->shouldReceive('getEnvironment')->andReturn('prod');
         $this->kernel->shouldReceive('isDebug')->andReturn(false);
         $this->kernel->shouldReceive('getContainer')->andReturn($this->container);
+        $this->kernel->shouldReceive('boot');
+        $this->kernel->shouldReceive('getBundles')->andReturn(array());
     }
 
     public function tearDown()
@@ -83,6 +86,7 @@ class GenerateCommandTest extends \PHPUnit_Framework_TestCase
             ));
         $this->container->shouldReceive('getParameter')->with('braincrafted_bootstrap.css_preprocessor')->andReturn('less');
         $this->container->shouldReceive('getParameter')->with('braincrafted_bootstrap.assets_dir')->andReturn(__DIR__);
+        $this->container->shouldReceive('has');
 
         if (Kernel::VERSION_ID >= 20500) {
             $this->container->shouldReceive('enterScope')->with('request');
@@ -124,6 +128,8 @@ class GenerateCommandTest extends \PHPUnit_Framework_TestCase
             ->with('braincrafted_bootstrap.customize')
             ->andReturn(array('variables_file' => null));
 
+        $this->container->shouldReceive('has');
+
         // mock the Kernel or create one depending on your needs
         $application = new Application($this->kernel);
         $application->add(new GenerateCommand());
@@ -145,6 +151,8 @@ class GenerateCommandTest extends \PHPUnit_Framework_TestCase
             ->with('braincrafted_bootstrap.customize')
             ->andReturn(array('variables_file' => __DIR__.'/x/variables.less'));
         $this->container->shouldReceive('getParameter')->with('braincrafted_bootstrap.css_preprocessor')->andReturn('none');
+
+        $this->container->shouldReceive('has');
 
         // mock the Kernel or create one depending on your needs
         $application = new Application($this->kernel);
