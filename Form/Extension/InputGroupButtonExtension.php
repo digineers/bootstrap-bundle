@@ -35,7 +35,7 @@ class InputGroupButtonExtension extends AbstractTypeExtension
      *
      * @return array
      */
-    public static function getExtendedTypes()
+    public static function getExtendedTypes(): iterable
     {
         return [TextType::class];
     }

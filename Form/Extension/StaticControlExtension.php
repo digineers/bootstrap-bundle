@@ -67,7 +67,7 @@ class StaticControlExtension extends AbstractTypeExtension
      * If not we would have to create for every of the text-based types an own extension class.
      * This way we also support new text-based types out of the box.
      */
-    public static function getExtendedTypes()
+    public static function getExtendedTypes(): iterable
     {
         // map old class to new one using LegacyFormHelper
         return [FormType::class];
