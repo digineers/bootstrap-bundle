@@ -33,6 +33,7 @@
         "knplabs/knp-menu-bundle":      "BraincraftedBootstrapBundle styles the menus provided by KnpMenuBundle.",
         "twbs/bootstrap":               "Twitter Bootstrap provides the assets (images, CSS and JS)"
     },
+    "abandoned": true,
     "autoload": {
         "psr-4": { "Braincrafted\\Bundle\\BootstrapBundle\\": "" }
     }

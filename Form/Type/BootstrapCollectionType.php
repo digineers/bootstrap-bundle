@@ -55,47 +55,47 @@ class BootstrapCollectionType extends AbstractType
         if ($form->getConfig()->hasAttribute('prototype')) {
             $view->vars['prototype'] = $form->getConfig()->getAttribute('prototype')->createView($view);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $optionsNormalizer = function (Options $options, $value) {
-            // @codeCoverageIgnoreStart
-            $value['block_name'] = 'entry';
-
-            return $value;
-            // @codeCoverageIgnoreEnd
-        };
-
-        $defaults =  array(
-            'allow_add'          => false,
-            'allow_delete'       => false,
-            'prototype'          => true,
-            'prototype_name'     => '__name__',
-            'add_button_text'    => 'Add',
-            'add_button_class'   => 'btn btn-primary btn-sm',
-            'delete_button_text' => 'Delete',
-            'delete_button_class'=> 'btn btn-danger btn-sm',
-            'sub_widget_col'     => 10,
-            'button_col'         => 2,
-            'options'            => array(),
-        );
-
-
-        if (Kernel::VERSION_ID>=20800) {
-            $defaults['entry_type'] = 'Symfony\Component\Form\Extension\Core\Type\TextType';
-        } else {
-            // map old class to new one using LegacyFormHelper
-            $defaults['type'] = LegacyFormHelper::getType('text');
         }
 
-        $resolver->setDefaults($defaults);
+        /**
+         * {@inheritDoc}
+         */
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $optionsNormalizer = function (Options $options, $value) {
+                // @codeCoverageIgnoreStart
+                $value['block_name'] = 'entry';
 
-        $resolver->setNormalizer('options', $optionsNormalizer);
-    }
+                return $value;
+                // @codeCoverageIgnoreEnd
+            };
+
+            $defaults =  array(
+                'allow_add'          => false,
+                'allow_delete'       => false,
+                'prototype'          => true,
+                'prototype_name'     => '__name__',
+                'add_button_text'    => 'Add',
+                'add_button_class'   => 'btn btn-primary btn-sm',
+                'delete_button_text' => 'Delete',
+                'delete_button_class'=> 'btn btn-danger btn-sm',
+                'sub_widget_col'     => 10,
+                'button_col'         => 2,
+                'options'            => array(),
+            );
+
+
+            if (Kernel::VERSION_ID>=20800) {
+                $defaults['entry_type'] = 'Symfony\Component\Form\Extension\Core\Type\TextType';
+            } else {
+                // map old class to new one using LegacyFormHelper
+                $defaults['type'] = LegacyFormHelper::getType('text');
+            }
+
+            $resolver->setDefaults($defaults);
+
+            $resolver->setNormalizer('options', $optionsNormalizer);
+        }
 
     /**
      * {@inheritDoc}
